@@ -12,8 +12,16 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.x'
-      - run: flutter pub get
-      - run: flutter build apk --debug
+      
+      - name: Re-create Android Platform Files
+        run: flutter create . --platforms=android
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      - name: Build Debug APK
+        run: flutter build apk --debug
+
       - uses: actions/upload-artifact@v4
         with:
           name: TradeSpark-Debug-APK
