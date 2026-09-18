@@ -3,6 +3,7 @@ name: Build Flutter APK
 on:
   push:
     branches: [ main, master ]
+  workflow_dispatch:
 
 jobs:
   build:
@@ -24,8 +25,11 @@ jobs:
 
       - name: Re-create Clean Flutter App
         run: |
+          cp lib/main.dart lib/main.dart.bak
           rm -rf android
           flutter create . --org com.tradespark --platforms=android
+          cp lib/main.dart.bak lib/main.dart
+          rm lib/main.dart.bak
 
       - name: Install Dependencies
         run: flutter pub get
