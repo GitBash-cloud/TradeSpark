@@ -22,8 +22,10 @@ jobs:
           flutter-version: '3.x'
           channel: 'stable'
 
-      - name: Re-create Android Platform Files
-        run: flutter create . --platforms=android
+      - name: Re-create Android Project Files
+        run: |
+          rm -rf android
+          flutter create . --org com.tradespark --platforms=android
 
       - name: Install Dependencies
         run: flutter pub get
