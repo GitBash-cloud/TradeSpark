@@ -1,0 +1,20 @@
+name: Build Flutter APK
+
+on:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.x'
+      - run: flutter pub get
+      - run: flutter build apk --debug
+      - uses: actions/upload-artifact@v3
+        with:
+          name: TradeSpark-Debug-APK
+          path: build/app/outputs/flutter-apk/app-debug.apk
