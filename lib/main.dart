@@ -659,7 +659,7 @@ class _ScannerScreenState extends State<ScannerScreen>
                             color: isSelected ? AppTheme.profitGreen : Colors.transparent,
                           ),
                         ),
-                        alignment: Alignment.Center,
+                        alignment: Alignment.center,
                         child: Text(
                           mode.label,
                           style: TextStyle(
@@ -1467,7 +1467,7 @@ class _ActiveSignalsSectionState extends State<ActiveSignalsSection> {
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
             padding: const EdgeInsets.all(24),
-            alignment: Alignment.Center,
+            alignment: Alignment.center,
             decoration: BoxDecoration(
               color: AppTheme.darkSurface,
               borderRadius: BorderRadius.circular(16),
