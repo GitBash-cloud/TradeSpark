@@ -1,44 +1,45 @@
-name: Build Flutter APK
+name: Build TradeSpark APK
 
 on:
   push:
-    branches: [ main, master ]
-  workflow_dispatch:
+    branches: [main, master]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
 
-      - name: Set up Java 17
+    defaults:
+      run:
+        working-directory: path/to/flutter_app
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
-          java-version: '17'
+          distribution: zulu
+          java-version: "17"
 
-      - name: Set up Flutter
+      - name: Set up Flutter SDK
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.x'
-          channel: 'stable'
+          flutter-version: "3.24.0"
+          channel: stable
 
-      - name: Re-create Clean Flutter App
-        run: |
-          cp lib/main.dart lib/main.dart.bak
-          rm -rf android
-          flutter create . --org com.tradespark --platforms=android
-          cp lib/main.dart.bak lib/main.dart
-          rm lib/main.dart.bak
+      - name: Verify Flutter project
+        run: test -f pubspec.yaml
 
-      - name: Install Dependencies
+      - name: Install dependencies
         run: flutter pub get
 
-      - name: Build Debug APK (No-Analyze)
-        run: flutter build apk --debug --no-tree-shake-icons
+      - name: Build Release APK
+        run: flutter build apk --release
 
-      - name: Upload Debug APK
+      - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: TradeSpark-Debug-APK
-          path: build/app/outputs/flutter-apk/app-debug.apk
+          name: TradeSpark-Release-APK
+          path: path/to/flutter_app/build/app/outputs/flutter-apk/app-release.apk
+          retention-days: 30
